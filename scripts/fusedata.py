@@ -42,6 +42,16 @@ for file_name in file_list:
         # Remove the first column from the data
         data = data.iloc[:, 1:]
         
+        
+        # Add suffix to column headers based on origin file
+        origin_suffix = ''
+        if '_T1' in file_name:
+            origin_suffix = '_T1'
+        elif '_T2' in file_name:
+            origin_suffix = '_T2'
+        
+        data.columns = [col + origin_suffix for col in data.columns]
+        
         # Merge the data horizontally with the existing merged data
         merged_data = pd.concat([merged_data, data], axis=1)
 
