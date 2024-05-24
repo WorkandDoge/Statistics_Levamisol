@@ -12,21 +12,6 @@ if not os.path.exists('/Users/carinaobermuller/Documents/Statistics_Levamisol/da
 # Write the dataframe to a .csv file in the "data" folder
 df.to_csv('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Masterfile_Cross_Sectional.csv', index=False)
 
-# Move the existing fused data file to a temporary location
-if os.path.exists('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data.csv'):
-    os.rename('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data.csv', '/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data_temp.csv')
-
-# Create a new fused data file and append the Masterfile_Cross_Sectional.csv to it
-fused_data = pd.DataFrame()
-fused_data = fused_data.append(pd.read_csv('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Masterfile_Cross_Sectional.csv'))
-
-# Append the contents of the temporary fused data file to the new fused data file
-if os.path.exists('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data_temp.csv'):
-    fused_data = fused_data.append(pd.read_csv('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data_temp.csv'))
-
-# Write the fused data file
-fused_data.to_csv('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Fused_Data.csv', index=False)
-
 # Save variable definitions to a csv file in the "data" folder
 variable_definitions = meta.column_names_to_labels
 df_definitions = pd.DataFrame(variable_definitions.items(), columns=['Variable', 'Definition'])
