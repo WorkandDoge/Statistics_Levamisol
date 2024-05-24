@@ -4,3 +4,4 @@ pyreadstat
 openpyxl
 os
 scipy.stats
+scikit-learn
