@@ -5,7 +5,7 @@ import scipy.stats as stats
 def define_groups():
     # Read the CSV file into a pandas DataFrame
     data = pd.read_csv('/Users/carinaobermuller/Documents/Statistics_Levamisol/data/fuseddata.csv')
-
+    
     # Create Group 1 by filtering rows where 'Group_High_Low_Lev_COC_Ratio' is 0.0 or 1.0
     group1 = data[(data['Group_High_Low_Lev_COC_Ratio'] == 0.0) | (data['Group_High_Low_Lev_COC_Ratio'] == 1.0)]
 
