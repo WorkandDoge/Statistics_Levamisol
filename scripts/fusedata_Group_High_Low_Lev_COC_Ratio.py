@@ -2,24 +2,26 @@ import os
 import pandas as pd
 
 folder_path = '/Users/carinaobermuller/Documents/Statistics_Levamisol/data'
-output_file = '/Users/carinaobermuller/Documents/Statistics_Levamisol/data/fuseddata.csv'
+output_file = '/Users/carinaobermuller/Documents/Statistics_Levamisol/output_files/fuseddata_Group_High_Low_Lev_COC_Ratio.csv'
+master_file_path = '/Users/carinaobermuller/Documents/Statistics_Levamisol/data/Masterfile_Cross_Sectional.csv'
 
 # Get a list of all the files in the folder
 file_list = os.listdir(folder_path)
 
-# Ensure that Masterfile_Cross_Sectional.csv is the first file in the list
-master_file = 'Masterfile_Cross_Sectional.csv'
-if master_file in file_list:
-    file_list.remove(master_file)
-    file_list.insert(0, master_file)
-
 # Initialize an empty DataFrame to store the merged data
 merged_data = pd.DataFrame()
+
+# Read the master file and select the desired column
+selected_column = pd.read_csv(master_file_path, usecols=['Group_High_Low_Lev_COC_Ratio'])
+
+# Add the selected column as the first column of the merged data
+merged_data.insert(0, 'Group_High_Low_Lev_COC_Ratio', selected_column['Group_High_Low_Lev_COC_Ratio'])
+
 
 # Iterate over each file in the folder
 for file_name in file_list:
     # Exclude specific files
-    if file_name in ['fuseddata.csv', 'Value_Labels.csv', 'Variable_Definitions.csv']:
+    if file_name in ['Masterfile_Cross_Sectional.csv']:
         continue
     
     # Check if the file is a CSV file or a text/ASCII table
@@ -42,7 +44,6 @@ for file_name in file_list:
         # Remove the first column from the data
         data = data.iloc[:, 1:]
         
-        
         # Add suffix to column headers based on origin file
         origin_suffix = ''
         if '_T1' in file_name:
@@ -55,6 +56,9 @@ for file_name in file_list:
         # Merge the data horizontally with the existing merged data
         merged_data = pd.concat([merged_data, data], axis=1)
 
+
+# Remove empty rows from the merged data based on the selected column
+merged_data = merged_data.dropna(subset=['Group_High_Low_Lev_COC_Ratio'])
+
 # Save the merged data to a new CSV file
 merged_data.to_csv(output_file, index=False)
-

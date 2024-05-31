@@ -2,10 +2,9 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 
-#models
+#import possible models
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn import svm
+from sklearn import svm #svm.SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -20,13 +19,13 @@ def load_data(file_path):
 
 def perform_pca(data):
     # Perform PCA
-    pca = PCA(n_components=0.95)
+    pca = PCA(n_components=0.999)
     principal_components = pca.fit_transform(data)
     return principal_components
 
 def train_model(X_train, y_train):
     # Fit model
-    model = RandomForestClassifier()
+    model = model = MLPClassifier(random_state=42)
     model.fit(X_train, y_train)
     return model
 
@@ -36,13 +35,11 @@ def evaluate_model(model, X_test, y_test):
     print(f"Accuracy: {accuracy}")
 
 def main():
-    file_path = '/Users/carinaobermuller/Documents/Statistics_Levamisol/data/fuseddata_selectedcolumn.csv'
+    file_path = '/Users/carinaobermuller/Documents/Statistics_Levamisol/output_files/fuseddata_Group_High_Low_Lev_COC_Ratio.csv' # change to the path of the merged data file with the variable to predict
     data = load_data(file_path)
-    
-    # Select columns from column 404 onwards
-    X = data.iloc[:, 1:]
-    y = data['Group_High_Low_Lev_COC_Ratio']
-    
+    principal_components = perform_pca(data.iloc[:, 1:])
+    X = principal_components
+    y = data['Group_High_Low_Lev_COC_Ratio'] # change according to the column name in the data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     model = train_model(X_train, y_train)
     evaluate_model(model, X_test, y_test)
