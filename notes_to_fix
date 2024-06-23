@@ -7,4 +7,4 @@
 #do crossvalidation on linear regression model
 #use lasso to select variables
 #do confusion matrix and classification report
-#do hyperparameter tuning
+#do hyperparameter tuning for MLPClassifier
