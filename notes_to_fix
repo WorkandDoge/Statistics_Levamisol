@@ -1,0 +1,10 @@
+#import data from Freesurfer with patched verion
+#Levamisol: only at T2, remove T1 from model Group_High_Low... and HP Levamisol
+#do PCA after train test split, and seperate for train and test subset
+#try removing T2 or T2 from dataset from HP cocaine
+#make a loop to try out a set of n_neighbors (e.g. 1 to 26) to see what has the best accuracy performance
+#drop variable to predict before running prediction
+#do crossvalidation on linear regression model
+#use lasso to select variables
+#do confusion matrix and classification report
+#do hyperparameter tuning
